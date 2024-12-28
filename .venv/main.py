@@ -5,6 +5,12 @@ import cv2
 import numpy as np
 import os
 
+import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    config = load_dotenv(dotenv_path)
 # Загрузка модели YOLOv8
 model = YOLO('yolov8n.pt')
 cam_ip = os.environ.get("CAM_IP")
