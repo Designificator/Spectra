@@ -1,10 +1,10 @@
+from operator import truediv
+
 import cv2
 
 from ultralytics import YOLO
 import cv2
 import numpy as np
-import os
-
 import os
 from dotenv import load_dotenv
 
@@ -18,69 +18,92 @@ cam_port = os.environ.get("CAM_PORT")
 cam_attr = os.environ.get("CAM_CAPTURE_ATTR")
 #for i in range(1,300):
 capture_url = 'rtsp://admin:admin@'+cam_ip+':'+cam_port+"/"+cam_attr+".sdp"
-cam = cv2.VideoCapture(0) #capture_url
-# Список цветов для различных классов
-colors = [
-    (255, 0, 0), (0, 255, 0), (0, 0, 255), (255, 255, 0), (0, 255, 255),
-    (255, 0, 255), (192, 192, 192), (128, 128, 128), (128, 0, 0), (128, 128, 0),
-    (0, 128, 0), (128, 0, 128), (0, 128, 128), (0, 0, 128), (72, 61, 139),
-    (47, 79, 79), (47, 79, 47), (0, 206, 209), (148, 0, 211), (255, 20, 147)
-]
-
-
+cam = cv2.VideoCapture(capture_url) #
+SUM = 0
 # Функция для обработки изображения
 def process_image(image, tracks):
     # Загрузка изображения
-    results = model(image)[0]
+    results = model.track(image, persist=True, verbose=False)
 
     # Получение оригинального изображения и результатов
-    image = results.orig_img
-    classes_names = results.names
-    classes = results.boxes.cls.cpu().numpy()
-    boxes = results.boxes.xyxy.cpu().numpy().astype(np.int32)
-    boxes_id = results.boxes.id
-    # Подготовка словаря для группировки результатов по классам
-    grouped_objects = {}
-    grouped_objects["person"] = []
-    index = 0;
+    if results[0].boxes.id == None: return image, tracks
+
+    image = results[0].orig_img
+    classes_names = results[0].names
+    classes = results[0].boxes.cls.cpu().numpy()
+    boxes = results[0].boxes.xyxy.cpu().numpy().astype(np.int32)
+    boxes_id = results[0].boxes.id.int().cpu().tolist()
+
+    people = []
     # Рисование рамок и группировка результатов
-    for class_id, box in zip(classes, boxes):
+    for class_id, box, box_id in zip(classes, boxes, boxes_id):
         class_name = classes_names[int(class_id)]
-        color = colors[int(class_id) % len(colors)]  # Выбор цвета для класса
+        color = (255, 255, 255)  # Выбор цвета для класса
         if class_name != "person":
             continue
-        grouped_objects[class_name].append(box)
+        people.append((box, box_id))
 
         # Рисование рамок на изображении
         x1, y1, x2, y2 = box
         centre = (int((x1 + x2)/2), int((y1 + y2)/2))
         cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
-        cv2.putText(image, class_name, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-        if len(tracks) <= index:
-            tracks.append([])
-        tracks[index].append(centre)
-        index += 1
-    return image
-
-    # Сохранение данных в текстовый файл
+        cv2.putText(image, class_name + str(box_id), (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+        track = tracks.get(box_id)
+        if track == None: track = []
+        elif len(track) == 30: track.pop(0)
+        track.append(centre)
+        tracks[box_id] = track
+    tracks = delete_old_tracks(tracks, boxes_id)
+    return image, tracks
 
 def draw_tracks(image, tracks):
-    for track in tracks:
+    for key, track in tracks.items():
         for point_index in range(1, len(track)):
             pt1 = track[point_index - 1]
             pt2 = track[point_index]
             cv2.line(image, pt1, pt2, (0, 255, 0), 2)
     return image
+def delete_old_tracks(tracks, keys):
+    tracks = {key: tracks[key] for key in keys if key in tracks}
+    return tracks
 
-tracks = []
+def border_line_func(x, y):
+    if x >= 500: return True
+    else: return False
+
+def count_if_crossed(sum, pt1, pt2):
+    x1, y1 = pt1
+    x2, y2 = pt2
+    if border_line_func(x1, y1) and not border_line_func(x2, y2):
+        return -1
+    elif border_line_func(x2, y2) and not border_line_func(x1, y2):
+        return 1
+    else: return 0
+
+def update_visitors(sum, tracks):
+    for key, track in tracks.items():
+        if len(track) < 2: continue
+        pt1 = track[-2]
+        pt2 = track[-1]
+        sum += count_if_crossed(sum, pt1, pt2)
+    if sum < 0:
+        print("ERROR, negative sum!")
+        sum = 0
+    return sum
+
+tracks = {}
 while True:
     ret, frame = cam.read()
     if not ret:
         break
     small = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
-    frame = process_image(frame, tracks)
+    frame, tracks = process_image(frame, tracks)
     frame = draw_tracks(frame, tracks)
+    frame = cv2.line(frame, (500, 0), (500, 1000), (0, 0, 255), 3)
+    SUM = update_visitors(SUM, tracks)
+    print(SUM)
     cv2.imshow("video", frame)
     if cv2.waitKey(1) == ord("q"): break
 cam.release()
+cv2.destroyAllWindows()
