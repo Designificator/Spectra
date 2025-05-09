@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Video Stream</title>
+  </head>
+  <body>
+  <img src="{{ url_for('video_feed') }}" />
+  <h1 id="counter"></h1>
+<!--  <script>-->
+<!--    var counter = document.getElementById("counter");-->
+<!--setInterval(function(){-->
+<!--    $.ajax({-->
+<!--      url: "/count",-->
+<!--      type: "get",-->
+<!--      success: function(response) {-->
+<!--        counter.innerText = response-->
+<!--       },-->
+<!--      error: function(xhr) {-->
+<!--          //Handel error-->
+<!--      }-->
+<!--    });-->
+<!--}, 1000);-->
+<!--    setInterval( function update(){-->
+<!--    fetch("/count").then(response => response.json())-->
+<!--    .then(response => document.getElementById("counter").innerText = response.count);-->
+<!--    }, 1000);-->
+<!--  </script>-->
+  </body>
+</html>

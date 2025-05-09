@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/www.css') }}">
+    <link href="https://fonts-online.ru/fonts/grafita" rel="stylesheet">
+    <title>Чат "Bar"</title>
+</head>
+<body>
+
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="static\images\Logo.png" alt="Logo" class="logo-img">
+            <span class="brand">spectra</span>
+        </div>
+        <nav class="menu">
+            <a href="#video"><img src="static\images\icon1.png" class="icon" height="20" height="20">видео</a>
+            <a href="#команда"><img src="static\images\icon2.png" class="icon" width="20" height="20" >команда</a>
+            <a href="#контакты"><img src="static\images\icon3.png" class="icon" width="25" height="25">контакты</a>
+        </nav>
+        <div class="user">
+            <a href="#">user<img src="static\images\user.png" class="user-img" width="20" height="20" ></a>
+        </div>   
+    </header>
+    <section>
+        <div class="video_feed_box">
+            <img src="{{ url_for('video_feed') }}" id="video_feed"/>
+            <h1 id="counter"></h1>
+        </div>
+<!--  <script>-->
+<!--    var counter = document.getElementById("counter");-->
+<!--setInterval(function(){-->
+<!--    $.ajax({-->
+<!--      url: "/count",-->
+<!--      type: "get",-->
+<!--      success: function(response) {-->
+<!--        counter.innerText = response-->
+<!--       },-->
+<!--      error: function(xhr) {-->
+<!--          //Handel error-->
+<!--      }-->
+<!--    });-->
+<!--}, 1000);-->
+<!--    setInterval( function update(){-->
+<!--    fetch("/count").then(response => response.json())-->
+<!--    .then(response => document.getElementById("counter").innerText = response.count);-->
+<!--    }, 2000);-->
+<!--  </script>-->
+    </section>
+<body>
