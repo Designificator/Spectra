@@ -29,24 +29,12 @@
             <img src="{{ url_for('video_feed') }}" id="video_feed"/>
             <h1 id="counter"></h1>
         </div>
-<!--  <script>-->
-<!--    var counter = document.getElementById("counter");-->
-<!--setInterval(function(){-->
-<!--    $.ajax({-->
-<!--      url: "/count",-->
-<!--      type: "get",-->
-<!--      success: function(response) {-->
-<!--        counter.innerText = response-->
-<!--       },-->
-<!--      error: function(xhr) {-->
-<!--          //Handel error-->
-<!--      }-->
-<!--    });-->
-<!--}, 1000);-->
-<!--    setInterval( function update(){-->
-<!--    fetch("/count").then(response => response.json())-->
-<!--    .then(response => document.getElementById("counter").innerText = response.count);-->
-<!--    }, 2000);-->
-<!--  </script>-->
+  <script>
+    var counter = document.getElementById("counter");
+    setInterval( function update(){
+    fetch("/count").then(response => response.json())
+    .then(response => document.getElementById("counter").innerText = response.count);
+    }, 2000);
+  </script>
     </section>
 <body>

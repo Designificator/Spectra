@@ -1,59 +1,88 @@
 from operator import truediv
 
-import cv2, queue, threading, time
-
 from ultralytics import YOLO
 import cv2
 import numpy as np
 import os
 from dotenv import load_dotenv
+import sys
+import time
+import threading
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
 if os.path.exists(dotenv_path):
     config = load_dotenv(dotenv_path)
-# Загрузка модели YOLOv8
 model = YOLO('yolov8n.pt')
 cam_ip = os.environ.get("CAM_IP")
 cam_port = os.environ.get("CAM_PORT")
 cam_attr = os.environ.get("CAM_CAPTURE_ATTR")
-#for i in range(1,300):
 capture_url = 'rtsp://admin:admin@'+cam_ip+':'+cam_port+"/"+cam_attr+".sdp"
 
+class FreshestFrame(threading.Thread):
+    def __init__(self, capture, name='FreshestFrame'):
+        self.capture = capture
+        assert self.capture.isOpened()
 
-class Camera:
-    last_frame = None
-    last_ready = None
-    last_ready2 = None
-    lock = Lock()
-    capture = None
+        self.cond = threading.Condition()
 
-    def __init__(self, link):
-        self.capture = cv2.VideoCapture(link)
-        self.signal = 1
-        thread = threading.Thread(target=self.rtsp_cam_buffer, args=(), name="rtsp_read_thread")
-        thread.daemon = True
-        thread.start()
+        self.running = False
 
-    def rtsp_cam_buffer(self):
-        while True:
-            with self.lock:
-                self.last_ready = self.capture.grab()
+        self.frame = None
 
-    def getFrame(self):
-        if (self.last_ready):
-            self.last_ready2, self.last_frame = self.capture.retrieve()
-            if (self.last_ready2):
-                return self.last_frame.copy()
-            else:
-                return -1
-        else:
-            return -1
+        self.latestnum = 0
 
-    def delete(self):
+        self.callback = None
+
+        super().__init__(name=name)
+        self.start()
+
+    def start(self):
+        self.running = True
+        super().start()
+
+    def release(self, timeout=None):
+        self.running = False
+        self.join(timeout=timeout)
         self.capture.release()
 
-cam = cv2.VideoCapture(capture_url) #capture_url
+    def run(self):
+        counter = 0
+        while self.running:
+            # block for fresh frame
+            (rv, img) = self.capture.read()
+            assert rv
+            counter += 1
 
+            with self.cond:
+                self.frame = img if rv else None
+                self.latestnum = counter
+                self.cond.notify_all()
+
+            if self.callback:
+                self.callback(img)
+
+    def read(self, wait=True, seqnumber=None, timeout=None):
+        # with no arguments (wait=True), it always blocks for a fresh frame
+        # with wait=False it returns the current frame immediately (polling)
+        # with a seqnumber, it blocks until that frame is available (or no wait at all)
+        # with timeout argument, may return an earlier frame;
+        #   may even be (0,None) if nothing received yet
+
+        with self.cond:
+            if wait:
+                if seqnumber is None:
+                    seqnumber = self.latestnum + 1
+                if seqnumber < 1:
+                    seqnumber = 1
+
+                rv = self.cond.wait_for(lambda: self.latestnum >= seqnumber, timeout=timeout)
+                if not rv:
+                    return (self.latestnum, self.frame)
+
+            return (self.latestnum, self.frame)
+
+cam = cv2.VideoCapture(capture_url) #capture_url
+freshest = FreshestFrame(cam)
 # Функция для обработки изображения
 def process_image(image, tracks):
     # Загрузка изображения
