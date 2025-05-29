@@ -9,22 +9,50 @@ height: 100%;
 }
 @font-face {
     font-family: 'Grafita';
-    src: url('/static/images/Grafita.otf');
+    src: url('/static/fonts/Grafita.otf');
 }
 @font-face {
     font-family: 'Samsung';
-    src: url('/static/images/samsungbold.otf');
+    src: url('/static/fonts/samsungbold.otf');
 }
+@font-face {
+    font-family: 'YS music';
+    src: url('/static/fonts/YSMusic-HeadlineBold.ttf');
+    }
+@font-face {
+    font-family: 'GraphicLCG-Regular';
+    src: url('/static/fonts/GraphikLCG-Regular.ttf');
+    }
+@font-face {
+    font-family: 'GraphicLCG-Medium';
+    src: url('/static/fonts/GraphikLCG-Medium.ttf');
+    }
 
 body {
     max-width: 100%;
     height: 100%;
-    background-color: rgb(0, 0, 0);
-    background-image: url('/static/images/Background.png');
+
+
     color: white;
+    background-color: #0C0C0C;
+
    
 }
+.background{
+    position: absolute;
+    height: 300vh;
+    width: 100vw;
+    background: url('/static/images/background2.svg') 0 80%/100vw no-repeat, url('/static/images/background1.svg') 0 0%/100vw no-repeat;
+    z-index: 0;
 
+}
+.background-cropped{
+position: absolute;
+    height: 200vh;
+    width: 100vw;
+    background: url('/static/images/background1.svg') 0 0%/100vw no-repeat;
+    z-index: 0;
+}
 section {
     display: flex;
     flex-direction: column;
@@ -34,31 +62,23 @@ section {
     display: flex;
     flex-direction: column;
 }
-#video_feed {
-    width: 50vw;
-    margin: auto;
-    display: inline-block;
-}
+
 /*Шторка сайта*/
 
 .navbar {
     font-size: 20px;
     padding: 0px 102px 0px 165px;
     height: 5vhpx;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: space-between;
-   
-    background-color: #000000;
+    position: fixed;
+    background-color: #0C0C0C;
     font-family: 'Grafita';
+    z-index: 100;
 }
-
-.login, .user {
-    display: flex;
-    align-items: center;
-}
-
-.icon {
+.menu-icon {
     margin-right: 10px;
     align-items: center;
     justify-content: space-between;
@@ -67,7 +87,7 @@ section {
 .logo {
     margin: 22.5px 0;
   
-    background-color: rgb(0, 0, 0);
+    background-color: 0C0C0C;
     display: flex;
     align-items: center;
 }
@@ -83,74 +103,56 @@ section {
 
 .menu {
     font-family: 'Grafita', sans-serif;
-    background-color: rgb(0, 0, 0);
+    background-color: 0C0C0C;
     display: flex;
     flex-grow: 1;
     justify-content: center;
 }
 
-.menu a {
+.menu a, .menu-item {
     
     color: rgb(255, 255, 255);
     text-decoration: none;
     display: flex;
     margin: auto;
     margin: 0 27px;
-
+    border: 0;
+    background-color: #0C0C0C;;
+    font-family: inherit;
+    font-size: inherit;
 }
 
 
-.menu a:hover {
+.menu a:hover, .menu-item:hover {
     text-decoration: underline;
 }
-
-
-.user {
-    margin: 15px 0;
-    font-family: 'Grafita', sans-serif;
-    display: flex;
-    align-items: center;
-    width: 150px;
-    height: 50px;
-
-    
-    
-    
-    justify-content: center;
-    background-color:rgb(255, 255, 255);
-    border-radius: 50px;
-}
-.user-img {
-    margin: auto;
-    margin-left: 10px;
-}
-.user a {
-    font-size: 20px;
-    color: rgb(0, 0, 0);
-    display: flex;
-    text-decoration: none;
-
-}
-
 html {
     scroll-behavior: smooth;
   }
 
-#video{
-    height: 1000px;
-    background-color: #000000;
-   
-}
 
 /*Общий текст*/
-
+.main{
+    padding-top: 275px;
+    display: flex;
+    flex-direction: column;
+}
+.hello{
+    border: 2px #FFFFFF solid;
+    border-radius: 15px;
+    padding: 20px 15px 20px 15px;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Samsung', sans;
+    max-width: 150px;
+    margin: auto;
+}
 h1{
-    font-family: 'Samsung', sans-serif;
-    margin: 0px 600px;
-    margin-top: 30px;
-    font-size: 48px;
-
-
+    font-family: 'YS music', sans-serif;
+    margin: auto;
+    font-size: 96px;
+    text-align: center;
+    margin-bottom: 65px;
 }
 
 p{
@@ -168,7 +170,199 @@ p{
 
 }
 
+.subsection{
+    margin-top: 165px;
+    z-index: 1;
+}
+.subsection-paragraph{
+    display: flex;
+    flex-direction: column;
+}
+.subsection-main{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+}
+.icon{
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
+h2{
+    font-size: 48px;
+    font-family: 'YS music';
+    font-weight: 600;
+    text-align: center;
+    margin-top: 40px;
+}
+h3{
+    font-size: 24px;
+    font-family: 'GraphicLCG-Medium';
+    font-weight: 400;
+    text-align: center;
+    margin-top: 50px;
+}
+h4{
+    font-size: 20px;
+    font-family: 'GraphicLCG-Medium';
+    font-weight: 500;
+    text-align: center;
+    margin-top: 35px;
+}
 
+.play-button{
+    margin: 0 auto 70px auto;
+    height: 50px;
+    width: 100px;
+    color: #000000;
+    background-color: #FFFFFF;
+    font-size: 14px;
+    font-family: 'YS music';
+    font-weight: 600;
+    border-radius: 25px;
+}
+.video-holder{
+    width: 80vw;
+    height: 80vh;
+    background-color: black;
+    margin: auto;
+    border-radius: 50px;
+}
+#videofeed{
+    height: 80vh;
+    width: auto;
+    margin: auto;
+}
+.fullscrean-button{
+    position: absolute;
+    margin: 40vh 0 0 42vw;
+    background-color: transparent;
+    border: 0;
+    z-index: 10;
+}
+button:hover{
+    cursor: pointer;
+}
 
+.members-holder{
+    background-color: #171717;
+    border-radius: 50px;
+    height: 80vh;
+    width: 80vw;
+    margin: auto;
+    display: flex;
+}
+.members-info{
+    padding: 70px 0 0 115px;
+}
+.members-info h3{
+    margin-top: 0px;
+    font-family: 'YS music';
+    text-align: left;
+}
+.members-info h4{
+    margin-bottom: 35px;
+    text-align: left;
+    font-family: 'GraphicLCG-Regular';
+}
+#nextmember-button{
+    font-family: 'YS music';
+    font-size: 16px;
+    margin: 55px 0 55px 0;
+    border: 0;
+    background-color: transparent;
+    color: #E8F69F;
+}
+.members-picture{
+    background-color: #E8F69F;
+    width: 35vw;
+    border-radius: 50px;
+    margin-left: auto;
+}
+#members-picture-content{
+    height: 85vh;
+    width: auto;
+    margin: -5vh 0 0 4vw;
+    transition: all 1s ease-in-out;
+}
 
+.contact-table{
+    display: flex;
 
+}
+.contact-column{
+    display: flex;
+    flex-direction: column;
+    margin-left: 70px;
+}
+.contact-element{
+    margin-bottom: 100px;
+}
+.contact-element-rectangle{
+    width: 400px;
+    height: 520px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 25px 0 20px 0;
+    margin-bottom: 75px;
+}
+.contact-element-rectangle h2{
+    margin-top: 0;
+}
+.contact-element-text h3{
+    font-family: 'YS music';
+}
+#contact-element-rectangle-gmail{
+    background-color: #FFFFFF;
+    margin-top: 285px;
+}
+#contact-element-rectangle-gmail h2{
+    color: #3F8CFF;
+}
+#contact-element-rectangle-tg{
+    background-color: #000000;
+}
+#contact-element-rectangle-figma{
+    background-color: #5D6EF3;
+}
+#contact-element-rectangle-vk{
+    background-color: #0077FF;
+    margin-top: 420px;
+}
+.QR{
+    width: 350px;
+    height: 350px;
+    border-radius: 50px;
+    margin: 15px auto 0 auto;
+}
+
+footer{
+background: url('/static/images/footer_back2.svg') bottom 0 left 0/100vw no-repeat, url('/static/images/footer_back1.svg') 0 0/100vw no-repeat;
+    background-color: #E8F69F;
+    color: #000000;
+    padding: 65px 0 70px 160px;
+
+}
+.footer-title{
+    font-size: 48px;
+    font-family: 'YS music';
+    font-weight: 600;
+    margin-bottom: 35px;
+}
+.footer-text{
+    font-size: 32px;
+    font-family: 'GraphicLCG-Medium';
+    font-weight: 600;
+    margin-bottom: 55px;
+}
+.totop-button{
+    background-color: #000000;
+    color: #FFFFFF;
+    border-radius: 25px;
+    width: 330px;
+    height: 80px;
+    font-size: 24px;
+    font-family: 'YS music';
+    font-weight: 600;
+    text-align: center;
+}

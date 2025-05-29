@@ -4,26 +4,53 @@
     <title>Video Stream</title>
   </head>
   <body>
-  <img src="{{ url_for('video_feed') }}" />
-  <h1 id="counter"></h1>
-<!--  <script>-->
-<!--    var counter = document.getElementById("counter");-->
-<!--setInterval(function(){-->
-<!--    $.ajax({-->
-<!--      url: "/count",-->
-<!--      type: "get",-->
-<!--      success: function(response) {-->
-<!--        counter.innerText = response-->
-<!--       },-->
-<!--      error: function(xhr) {-->
-<!--          //Handel error-->
-<!--      }-->
-<!--    });-->
-<!--}, 1000);-->
-<!--    setInterval( function update(){-->
-<!--    fetch("/count").then(response => response.json())-->
-<!--    .then(response => document.getElementById("counter").innerText = response.count);-->
-<!--    }, 1000);-->
-<!--  </script>-->
+  <header class="navbar">
+    <a class="arrow" href="/home"><img src="static\images\Back Button.svg"></a>
+    <div class="brand">spectra</div>
+    <span id="counter"></span>
+  </header>
+  <img id="videofeed" width="100%" src="{{ url_for('video_feed') }}" />
+
+  <script>
+    var counter = document.getElementById("counter");
+    setInterval( function update(){
+    fetch("/count").then(response => response.json())
+    .then(response => document.getElementById("counter").innerText = response.count);
+    }, 1000);
+  </script>
   </body>
+<style>
+  @font-face {
+    font-family: 'Grafita';
+    src: url('/static/fonts/Grafita.otf');
+}
+@font-face {
+    font-family: 'Samsung';
+    src: url('/static/fonts/samsungbold.otf');
+}
+  html, body{
+width: 100%;
+height: 100%;
+margin: 0;
+overflow-y: hidden;
+}
+.navbar {
+    padding-left: 3vw;
+    padding-right: 3vw;
+    height: 5vhpx;
+    display: flex;
+    align-items: center;
+    background-color: #0C0C0C;
+    font-family: 'Grafita';
+    color: #FFFFFF;
+}
+.brand {
+    font-size: 36px;
+    margin: auto;
+}
+#counter{
+font-size: 32px;
+font-family: 'Samsung';
+  }
+</style>
 </html>

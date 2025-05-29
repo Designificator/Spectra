@@ -16,25 +16,229 @@
             <span class="brand">spectra</span>
         </div>
         <nav class="menu">
-            <a href="#video"><img src="static\images\icon1.png" class="icon" height="20" height="20">видео</a>
-            <a href="#команда"><img src="static\images\icon2.png" class="icon" width="20" height="20" >команда</a>
-            <a href="#контакты"><img src="static\images\icon3.png" class="icon" width="25" height="25">контакты</a>
+            <a href="/"><img src="static\images\icon1.png" class="menu-icon" height="20" height="20">видео</a>
+            <button id="tomembers-button" class="menu-item"><img src="static\images\icon2.png" class="menu-icon" width="20" height="20" >команда</button>
+            <button id="tocontacts-button" class="menu-item"><img src="static\images\icon3.png" class="menu-icon" width="25" height="25">контакты</button>
         </nav>
-        <div class="user">
-            <a href="#">user<img src="static\images\user.png" class="user-img" width="20" height="20" ></a>
-        </div>   
     </header>
     <section>
-        <div class="video_feed_box">
-            <img src="{{ url_for('video_feed') }}" id="video_feed"/>
-            <h1 id="counter"></h1>
+        <div class="background"></div>
+        <div class="background" style="margin-top: 250vh"></div>
+        <div class="background-cropped" style="margin-top: 500vh"></div>
+        <div class="main">
+            <h1>Мир не был таким
+            <br>доступным</h1>
+            <div class="hello">Приветствуем!</div>
         </div>
-  <script>
-    var counter = document.getElementById("counter");
-    setInterval( function update(){
-    fetch("/count").then(response => response.json())
-    .then(response => document.getElementById("counter").innerText = response.count);
-    }, 2000);
-  </script>
+        <div class="subsection">
+            <div class="subsection-paragraph">
+                <img class="icon" src="static\images\icon_rectangle.svg">
+                <h2>Опробуйте инновационную
+                    <br>систему наблюдения</h2>
+                <h3>оцените возможности инновационной
+                    <br>системы наблюдения в реальном времени</h3>
+            </div>
+            <div class="subsection-main">
+                <button class="play-button" id="play-button">Запустить
+                </button>
+                <div class="video-holder" id="video-holder"></div>
+                <a class="fullscrean-button" id="fullscrean-button" href="/"><img src="static\images\fullscrean_btn.svg"></a>
+            </div>
+        </div>
+        <div class="subsection">
+            <div class="subsection-paragraph">
+                <img class="icon" src="static\images\Team Icon.svg">
+                <h2>Наша команда.
+                    <br>Детали о работе профессионалов</h2>
+                <h3>Узнайте биографию и вклад в проект каждого участника.
+                    <br>Прочувствуйте индивидуальный подход к работе наших специалистов</h3>
+            </div>
+            <div class="subsection-main">
+                <div class="members-holder">
+                    <div class="members-info">
+                        <h3 id="members-info-title">Валерия — наш капитан</h3>
+                        <button id="nextmember-button">Смотреть следующего участника →</button>
+                        <h3>Роль участника</h3>
+                        <h4 id="members-info-role">Благодаря структуризации собранных данных,<br>работа Валерии помогает команде эффективно<br>использовать информацию<br>и прогрессивно развиваться.</h4>
+                        <h3>Индивидуальный вклад</h3>
+                        <h4 id="members-info-input">сбор и анализ информации для проекта<br>структурирование всех данных для проекта<br>оформление документации<br>написание пояснительных записок</h4>
+                    </div>
+                    <div class="members-picture">
+                        <img src="static\images\Lera.png" id="members-picture-content">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="subsection">
+            <div class="subsection-paragraph">
+                <img class="icon" src="static\images\Contact Icon.svg">
+                <h2>Связь с нашей командой</h2>
+                <h3>Детально предоставим информацию о том
+                    <br>как связаться с нами</h3>
+            </div>
+            <div class="subsection-main">
+                <div class="contact-table">
+                    <div class="contact-column">
+                        <h2>Контакты во<br>всех соцсетях</h2>
+                        <div class="contact-element">
+                            <div class="contact-element-rectangle" id="contact-element-rectangle-gmail">
+                                <img src="static\images\Gmail Logo.svg" class="icon">
+                                <img src="static\images\Gmail QR.svg" class="QR">
+                                <h2>Gmail</h2>
+                            </div>
+                            <div class="contact-element-text">
+                                <h3>Обратитесь за помощью на почту</h3>
+                                <h4>Напишите нам на почту, если столкнетесь
+                                <br>с проблемами или возникнут
+                                <br>другие вопросы</h4></div>
+                        </div>
+                    </div>
+                    <div class="contact-column">
+                        <div class="contact-element">
+                            <div class="contact-element-rectangle" id="contact-element-rectangle-tg">
+                                <img src="static\images\TG Logo.svg" class="icon">
+                                <a href="https://t.me/spectrahelp"><img src="static\images\TG QR.png" class="QR"></a>
+                                <h2>Telegram</h2>
+                            </div>
+                            <div class="contact-element-text">
+                                <h3>Свяжитесь с нами в Telegram</h3>
+                                <h4>Возникли вопросы? Свяжитесь с нашей
+                                <br>командой в Telegram и получите быструю
+                                <br>реакцию от команды</h4></div>
+                        </div>
+                        <div class="contact-element">
+                            <div class="contact-element-rectangle" id="contact-element-rectangle-figma">
+                                <img src="static\images\Figma Logo.svg" class="icon">
+                                <a href="https://www.figma.com/design/dRd9St9lSrTs7QFWar3HsX/BBuD?node-id=759-1457&t=RObTENNP2VFJ9wOd-0"><img src="static\images\Figma QR.png" class="QR"></a>
+                                <h2>Figma</h2>
+                            </div>
+                            <div class="contact-element-text">
+                                <h3>Посетите проект нашего сайта</h3>
+                                <h4>Хотите сделать крутой сайт? Возьмите за
+                                <br>основу проект “Spectra” для максимально
+                                <br>качественного опыта</h4></div>
+                        </div>
+                    </div>
+                    <div class="contact-column">
+                        <div class="contact-element">
+                            <div class="contact-element-rectangle" id="contact-element-rectangle-vk">
+                                <img src="static\images\VK Logo.svg" class="icon">
+                                <a href="https://vk.com/spectracom"><img src="static\images\VK QR.png" class="QR"></a>
+                                <h2>ВКонтакте</h2>
+                            </div>
+                            <div class="contact-element-text">
+                                <h3>Следите за нами во ВКонтакте</h3>
+                                <h4>Следите за последними новостями
+                                <br>и обновлениями проекта <br>в нашей группе Вконтакте</h4></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+    <footer>
+        <div class="footer-title">Будущее уже здесь
+        </div>
+        <div class="footer-text">Опробуйте возможности самой инновационной
+            <br>системы наблюдения, разработанной группой
+            <br>студентов ЮФУ.</div>
+        <button class="totop-button" id="totop-button">В начало ↑</button>
+    </footer>
+    <script>
+        async function scrollToYFor(endY, time) {
+            const start = performance.now()
+            const startY = window.scrollY
+            const y = (endY - startY)
+            while (performance.now() < start + time) {
+                const progress = (performance.now() - start) / time
+                window.scrollTo(0, startY + y * progress)
+                await new Promise(requestAnimationFrame)
+                }
+            window.scrollTo(0, endY)
+        }
+
+        class Member {
+            title;
+            role;
+            input;
+            img_src;
+            img_style;
+            constructor(title, role, input, img_src, img_style){
+                this.title = title;
+                this.role = role;
+                this.input = input;
+                this.img_src = img_src;
+                this.img_style = img_style;
+            }
+        }
+        class Team {
+            items;
+            current_idx;
+            max_idx;
+            constructor(num, arr){
+                this.items = new Array(num);
+                this.max_idx = num - 1;
+                for (let i = 0; i < num; i++){
+                    this.items[i] = arr[i];
+                }
+                this.current_idx = 0;
+            }
+            next(){
+                if (this.current_idx < this.max_idx){
+                    this.current_idx++;
+                }
+                else{
+                    this.current_idx = 0;
+                }
+                return this.items[this.current_idx];
+            }
+        }
+
+        const membersList = new Array(8);
+        membersList[0] = new Member("Валерия — наш капитан", "Благодаря структуризации собранных данных,<br>работа Валерии помогает команде эффективно<br>использовать информацию<br>и прогрессивно развиваться.", "сбор и анализ информации для проекта<br>структурирование всех данных для проекта<br>оформление документации<br>написание пояснительных записок", "Lera.png", "");
+        membersList[1] = new Member("Богдан — наш дизайнер", "Богдан отвечает за оформление дизайна сайта.<br>Он создает стильные и удобные компоненты,<br>которые делают сайт удобным для пользователей.", "оформление дизайна сайта<br>создание и оформление визуала<br>создание логотипа", "Bogdashka.png", "margin: -5vh 0 0 -7.76vw");
+        membersList[2] = new Member("Анастасия — наш дизайнер", "Анастасия создает стильный и гармоничный дизайн.<br>Её работа делает проект привлекательным<br>и запоминающимся, а логотип —<br>ярким символом проекта.", "оформление дизайна сайта<br>создание и оформление визуала<br>создание логотипа", "Nastya.png", "margin: -10vh 0 0 0; height: 90vh");
+        membersList[3] = new Member("Илья — наш программист", "Илья написал программный код<br>и интегрировал нейросеть,<br>обеспечивая функциональность и<br>интеллектуальные возможности сайта.", "разработка сайта<br>написание кода программы<br>работа с нейросетью", "Ilya.png", "height: 90vh; margin: -10vh 0 0 5vw");
+        membersList[4] = new Member("Вероника — наш программист", "Вероника оптимизирует работу сайта<br>и совершенствует код, делая проект<br>более быстрым и эффективным.", "разработка сайта<br>написание кода программы<br>работа с нейросетью", "Nika.png", "margin: -8vh 0 0 0; height: 88vh");
+        membersList[5] = new Member("Максим — наш тестировщик", "Максим анализировал видеоизображения,<br>обрабатывал их и создавал наглядные отчеты,<br>обеспечивая точность и понятность информации.", "анализ видеоизображения<br>cбор и обработка данных<br>визуализация и отчетность", "Max.png", "margin: -5vh 0 0 0");
+        membersList[6] = new Member("Дарья — наш экономист", "Дарья анализировала рынок, выявляя проблемы<br>и проводя расчёты, искала оптимальные стратегии,<br>обеспечивая экономическую эффективность проекта.", "анализ рынка и выявление проблем<br>нахождение решений проблем<br>выполнение расчётов", "Dasha.png", "margin: -10vh 0 0 -3vw; height: 90vh");
+        membersList[7] = new Member("Данил — наш аналитик", "Данил анализировал данные,<br>выявляя ключевые проблемы, рассчитывая показатели,<br>и предлагал оптимальные решения,<br>обеспечивая стратегическое развитие проекта.", "анализ рынка и выявление проблем<br>нахождение решений проблем<br>выполнение расчётов", "Danil.png", "margin: -10vh 0 0 4vw; height: 90vh");
+        var team = new Team(8, membersList);
+        const toMembersBtn = document.getElementById('tomembers-button');
+        const toContactsBtn = document.getElementById('tocontacts-button');
+        const playBtn = document.getElementById('play-button');
+        const fullscreanBtn = document.getElementById('fullscrean-button');
+        const toTopBtn = document.getElementById('totop-button');
+        const nextMemberBtn = document.getElementById('nextmember-button');
+
+        toMembersBtn.addEventListener('click', function toMembers() {
+            scrollToYFor(1900, 500);
+        });
+        toContactsBtn.addEventListener('click', function toContacts() {
+            scrollToYFor(3000, 500);
+        });
+        playBtn.addEventListener('click', function toVideo() {
+            scrollToYFor(1150, 500);
+            let videoFeed = document.createElement('div');
+            videoFeed.innerHTML = '<img id="videofeed" width="100%" src="{{ url_for('video_feed') }}" />'
+            videoFeed.style = 'display: flex';
+            let videoHolder = document.getElementById('video-holder');
+            videoHolder.insertAdjacentElement('afterbegin', videoFeed);
+        });
+        toTopBtn.addEventListener('click', function toTop() {
+            scrollToYFor(0, 500);
+        });
+        nextMemberBtn.addEventListener('click', function nextMember() {
+            let Title = document.getElementById('members-info-title');
+            let Role = document.getElementById('members-info-role');
+            let Input = document.getElementById('members-info-input');
+            let Image = document.getElementById('members-picture-content');
+            let member = team.next();
+            Title.innerText = member.title;
+            Role.innerHTML = member.role;
+            Input.innerHTML = member.input;
+            Image.src = 'static/images/' + member.img_src;
+            Image.style = member.img_style;
+        });
+    </script>
 <body>

@@ -11,13 +11,19 @@ from itertools import zip_longest
 
 from matplotlib.font_manager import json_dump
 
+import os
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+if os.path.exists(dotenv_path):
+    config = load_dotenv(dotenv_path)
+host_ip = os.environ.get('HOST_IP')
 app = Flask(__name__)
 tracks = {}
 SUM = [0]
 #cam.set(cv2.CAP_PROP_BUFFERSIZE, 4)
 @app.route('/')
 def index():
-    return render_template('html.html')
+    return render_template('index.html')
 
 def gencam(sum, camera, tracks):
     while True:
@@ -36,9 +42,12 @@ def gencam(sum, camera, tracks):
                b'Content-Type: image/jpeg\r\n\r\n' + finalframe + b'\r\n\r\n')
 def gencount(sum, tracks):
     while True:
-        sum = update_visitors(sum, tracks)
         sum_b = json.dumps({"count" : sum[0]}).encode()
         yield (sum_b)
+
+@app.route('/home')
+def home():
+    return render_template('html.html')
 
 @app.route('/video_feed')
 def video_feed():
@@ -49,4 +58,4 @@ def count():
     return Response(next(gencount(SUM, tracks)), mimetype='application/json')
     return Response(json.dumps({"count": random.randint(1, 99)}).encode())
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', debug=True,port="5000")
+    app.run(host=host_ip, debug=True,port="5000")
